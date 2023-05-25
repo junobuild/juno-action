@@ -8,11 +8,11 @@ if [ -z "$JUNO_TOKEN" ]; then
 fi
 
 # https://github.com/sindresorhus/env-paths#pathsconfig
-JUNO_LINUX_CONFIG_PATH="$XDG_CONFIG_HOME/juno-nodejs"
+JUNO_LINUX_CONFIG_PATH="$HOME/.config/juno-nodejs"
 JUNO_LINUX_CONFIG_FILE="$JUNO_LINUX_CONFIG_PATH/config.json"
 
 if [ ! -d "$JUNO_LINUX_CONFIG_PATH" ]; then
-  mkdir "$JUNO_LINUX_CONFIG_PATH"
+  mkdir -p "$JUNO_LINUX_CONFIG_PATH"
 fi
 
 echo "Storing JUNO_TOKEN in $JUNO_LINUX_CONFIG_FILE"
