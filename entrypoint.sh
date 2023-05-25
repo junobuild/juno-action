@@ -16,6 +16,6 @@ if [ ! -d "$JUNO_LINUX_CONFIG_PATH" ]; then
 fi
 
 echo "Storing JUNO_TOKEN in $JUNO_LINUX_CONFIG_FILE"
-echo "{\"token\": $JUNO_TOKEN}" > "$JUNO_LINUX_CONFIG_FILE"
+echo "$JUNO_TOKEN" > "$JUNO_LINUX_CONFIG_FILE"
 
 sh -c "juno $*"
