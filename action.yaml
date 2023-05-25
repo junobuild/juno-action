@@ -1,0 +1,15 @@
+name: 'GitHub Action for Juno'
+author: 'David Dal Busco'
+description: 'Enable arbitrary actions with the Juno CLI.'
+
+branding:
+  icon: 'box'
+  color: 'purple'
+
+outputs:
+  response:
+    description: 'Response from the cli execution'
+
+runs:
+  using: 'docker'
+  image: 'docker://peterpeterparker/juno-action:v0.0.1'
