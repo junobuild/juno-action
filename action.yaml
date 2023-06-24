@@ -12,4 +12,4 @@ outputs:
 
 runs:
   using: 'docker'
-  image: 'docker://peterpeterparker/juno-action:v0.0.7'
+  image: 'docker://peterpeterparker/juno-action:v0.0.8'
