@@ -1,6 +1,6 @@
 FROM node:18.16.0-buster
 
-LABEL version="0.0.9"
+LABEL version="0.0.10"
 LABEL repository="https://github.com/buildwithjuno/juno-action"
 LABEL homepage="https://juno.build"
 LABEL maintainer="David Dal Busco <david.dalbusco@outlook.com>"
@@ -13,7 +13,7 @@ LABEL com.github.actions.color="purple"
 RUN apt update && apt-get install --no-install-recommends -y jq openjdk-11-jre && rm -rf /var/lib/apt/lists/*;
 
 RUN npm i -g npm@9.6.1 && npm cache clean --force;
-RUN npm i -g @junobuild/cli@0.0.34 && npm cache clean --force;
+RUN npm i -g @junobuild/cli@0.0.37 && npm cache clean --force;
 
 COPY LICENSE README.md /
 COPY "entrypoint.sh" "/entrypoint.sh"
