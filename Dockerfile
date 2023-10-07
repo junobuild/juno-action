@@ -1,7 +1,7 @@
 FROM node:18.16.0-buster
 
 LABEL version="0.0.10"
-LABEL repository="https://github.com/buildwithjuno/juno-action"
+LABEL repository="https://github.com/junobuild/juno-action"
 LABEL homepage="https://juno.build"
 LABEL maintainer="David Dal Busco <david.dalbusco@outlook.com>"
 
