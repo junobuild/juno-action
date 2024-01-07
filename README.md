@@ -35,7 +35,7 @@ jobs:
         run: npm run build
 
       - name: Deploy to Juno
-        uses: buildwithjuno/juno-action@main
+        uses: junobuild/juno-action@main
         with:
           args: deploy
         env:
