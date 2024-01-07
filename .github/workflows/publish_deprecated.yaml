@@ -22,7 +22,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v4
         with:
-          images: junobuild/action
+          images: peterpeterparker/juno-action
           tags: |
             type=semver,pattern={{major}}
             type=semver,pattern={{version}}
