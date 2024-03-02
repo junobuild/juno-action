@@ -6,6 +6,8 @@ This GitHub Action for [Juno] enables arbitrary actions with the [command-line c
 
 - `JUNO_TOKEN`: The token to use for authentication. It can be generated through Juno's [console](https://console.juno.build). Prefer a controller with "Read-write" permission rather than administrator.
 
+- `PROJECT_PATH` - **Optional**. The path to the folder containing `juno.config.ts|js|json` if it doesn't exist at the root of your repository. e.g. `./my-app`.
+
 ## Example
 
 To deploy a release of your dapp to Juno with a GitHub Action:

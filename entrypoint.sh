@@ -7,4 +7,8 @@ if [ -z "$JUNO_TOKEN" ]; then
   exit 126
 fi
 
+if [ -n "$PROJECT_PATH" ]; then
+  cd "$PROJECT_PATH"
+fi
+
 sh -c "juno $*"
