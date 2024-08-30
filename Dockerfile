@@ -11,7 +11,7 @@ LABEL com.github.actions.color="purple"
 
 RUN apt update && apt-get install --no-install-recommends -y jq openjdk-11-jre && rm -rf /var/lib/apt/lists/*;
 
-RUN npm i -g npm@9.6.1 && npm cache clean --force;
+RUN npm i -g npm@10.8.2 && npm cache clean --force;
 RUN npm i -g @junobuild/cli@0.0.77 && npm cache clean --force;
 
 COPY LICENSE README.md /
