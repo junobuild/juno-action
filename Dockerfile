@@ -15,7 +15,6 @@ RUN npm i -g npm@10.8.2 && npm cache clean --force;
 RUN npm i -g @junobuild/cli@0.0.87 && npm cache clean --force;
 
 RUN npm install -g pnpm@latest-10 && npm cache clean --force;
-RUN npm install -g yarn && npm cache clean --force;
 
 COPY LICENSE README.md /
 COPY "entrypoint.sh" "/entrypoint.sh"
