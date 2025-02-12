@@ -12,7 +12,7 @@ LABEL com.github.actions.color="purple"
 RUN apt update && apt-get install --no-install-recommends -y jq openjdk-11-jre && rm -rf /var/lib/apt/lists/*;
 
 RUN npm i -g npm@10.8.2 && npm cache clean --force;
-RUN npm i -g @junobuild/cli@0.1.1 && npm cache clean --force;
+RUN npm i -g @junobuild/cli@0.1.3 && npm cache clean --force;
 
 RUN npm i -g pnpm@latest-10 && npm cache clean --force;
 
