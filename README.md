@@ -16,11 +16,12 @@ To deploy a release of your dapp to Juno with a GitHub Action:
 name: Deploy to Juno
 
 on:
-  release:
-    types: [released]
+  workflow_dispatch:
+  push:
+    branches: [main]
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Check out the repo
@@ -28,13 +29,11 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          node-version: 22
+          registry-url: "https://registry.npmjs.org"
 
       - name: Install Dependencies
         run: npm ci
-
-      - name: Build
-        run: npm run build
 
       - name: Deploy to Juno
         uses: junobuild/juno-action@main
