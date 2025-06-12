@@ -10,7 +10,7 @@ jobs:
     steps:
       # Action: https://github.com/actions/checkout/releases/tag/v4.2.2
       - name: Check out the repo
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
 
       # Action: https://github.com/docker/setup-buildx-action/releases/tag/v3.10.0
       - name: Set up Docker Buildx
