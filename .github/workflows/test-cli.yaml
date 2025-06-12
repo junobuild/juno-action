@@ -1,0 +1,24 @@
+name: Test Juno CLI runs from Docker image
+
+on:
+  workflow_dispatch:
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build Docker image
+        run: docker build . -t juno-action
+
+      - name: Test Juno CLI version
+        run: |
+          OUTPUT=$(docker run --rm -e JUNO_TOKEN="${{ secrets.JUNO_TOKEN }}" juno-action version --cli)
+          echo "$OUTPUT"
+          if [[ "$OUTPUT" != *"v0.4.0"* ]]; then
+            echo "❌ Expected version v0.4.0 not found in output"
+            exit 1
+          fi
+        shell: bash
