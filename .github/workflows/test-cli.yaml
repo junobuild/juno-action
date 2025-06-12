@@ -10,8 +10,18 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Build Docker image
-        run: docker build . -t juno-action
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build and push
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: Dockerfile
+          load: true
+          tags: juno-action:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
 
       - name: Test Juno CLI version
         run: |
