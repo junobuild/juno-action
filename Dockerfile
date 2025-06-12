@@ -1,4 +1,4 @@
-FROM node:20-buster
+FROM node:22-slim
 
 LABEL repository="https://github.com/junobuild/juno-action"
 LABEL homepage="https://juno.build"
