@@ -13,8 +13,6 @@ RUN npm i -g @junobuild/cli@0.4.0
 
 RUN npm i -g pnpm@10.12.1
 
-RUN pnpm --verison
-
 COPY LICENSE README.md /
 COPY "entrypoint.sh" "/entrypoint.sh"
 
