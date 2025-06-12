@@ -11,6 +11,6 @@ docker build . --file Dockerfile -t juno-action --progress=plain --no-cache
 ### Inspect size
 
 ```bash
-docker images
+docker images juno-action
 docker image inspect 45c21d84fe24 --format='{{.Size}}' | awk '{printf "%.2f MB\n", $1/1024/1024}'
 ```
