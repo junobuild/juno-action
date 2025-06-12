@@ -21,3 +21,7 @@ docker image inspect 45c21d84fe24 --format='{{.Size}}' | awk '{printf "%.2f MB\n
 docker pull node:22-slim
 docker inspect --format='{{index .RepoDigests 0}}' node:22-slim
 ```
+
+### References
+
+This project is inspired by [w9jds/firebase-action](https://github.com/w9jds/firebase-action)
