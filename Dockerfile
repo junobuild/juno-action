@@ -9,8 +9,6 @@ LABEL com.github.actions.description="Enable arbitrary actions with the Juno CLI
 LABEL com.github.actions.icon="package"
 LABEL com.github.actions.color="purple"
 
-RUN apt update && apt-get install --no-install-recommends -y jq openjdk-11-jre && rm -rf /var/lib/apt/lists/*;
-
 RUN npm i -g npm@10.8.2 && npm cache clean --force;
 RUN npm i -g @junobuild/cli@0.4.0 && npm cache clean --force;
 
