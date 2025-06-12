@@ -11,7 +11,7 @@ LABEL com.github.actions.color="purple"
 
 RUN npm i -g @junobuild/cli@0.4.0
 
-RUN npm i -g pnpm@latest-10
+RUN npm i -g pnpm@10.12.1
 
 COPY LICENSE README.md /
 COPY "entrypoint.sh" "/entrypoint.sh"
