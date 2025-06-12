@@ -1,4 +1,4 @@
-FROM node:22-slim
+FROM node:22-slim@sha256:048ed02c5fd52e86fda6fbd2f6a76cf0d4492fd6c6fee9e2c463ed5108da0e34
 
 LABEL repository="https://github.com/junobuild/juno-action"
 LABEL homepage="https://juno.build"
