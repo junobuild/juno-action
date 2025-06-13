@@ -66,7 +66,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt update && apt install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # Install Juno's CLI
-RUN npm i -g @junobuild/cli@0.4.0
+RUN npm i -g @junobuild/cli@next
 
 # Install pnpm which is not part of the default image
 RUN npm i -g pnpm@10.12.1
