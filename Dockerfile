@@ -5,6 +5,7 @@ LABEL stage=builder
 
 # Install required tools
 RUN DEBIAN_FRONTEND=noninteractive apt update && apt install -y \
+    git \
     bash \
     curl \
     build-essential \
@@ -79,6 +80,13 @@ COPY --from=builder --chown=apprunner:apprunner /home/apprunner/.rustup /home/ap
 ENV CARGO_HOME=/home/apprunner/.cargo \
     RUSTUP_HOME=/home/apprunner/.rustup \
     PATH=/home/apprunner/.cargo/bin:$PATH
+
+# Resolves cargo build error:
+# network failure seems to have happened
+# if a proxy or similar is necessary `net.git-fetch-with-cli` may help here
+# https://doc.rust-lang.org/cargo/reference/config.html#netgit-fetch-with-cli
+RUN mkdir -p /home/apprunner/.cargo && \
+    echo '[net]\ngit-fetch-with-cli = true' > /home/apprunner/.cargo/config.toml
 
 # Copy docs and entrypoint
 COPY --chown=apprunner:apprunner LICENSE README.md /
