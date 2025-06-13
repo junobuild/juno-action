@@ -8,6 +8,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt update && apt install -y \
     bash \
     curl \
     build-essential \
+    ca-certificates \
     && rm -rf /var/lib/apt/lists/*
 
 # Create a working user
