@@ -68,7 +68,16 @@ RUN npm i -g pnpm@10.12.1
 RUN useradd -ms /bin/bash apprunner
 USER apprunner
 
+# Copy Cargo binaries
 COPY --from=builder --chown=apprunner:apprunner /home/apprunner/.cargo/bin /home/apprunner/.cargo/bin
+
+# Copy Rust toolchain (includes rustc)
+COPY --from=builder --chown=apprunner:apprunner /home/apprunner/.rustup /home/apprunner/.rustup
+
+# Define paths
+ENV CARGO_HOME=/home/apprunner/.cargo \
+    RUSTUP_HOME=/home/apprunner/.rustup \
+    PATH=/home/apprunner/.cargo/bin:$PATH
 
 # Copy docs and entrypoint
 COPY --chown=apprunner:apprunner LICENSE README.md /
