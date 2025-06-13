@@ -8,7 +8,7 @@ Here are a few useful Docker commands that can be used for local development.
 docker build . --file Dockerfile -t juno-action --progress=plain --no-cache
 ```
 
-### Inspect size
+### Inspect Size
 
 ```bash
 docker images juno-action
@@ -20,6 +20,12 @@ docker image inspect 45c21d84fe24 --format='{{.Size}}' | awk '{printf "%.2f MB\n
 ```bash
 docker pull node:22-slim
 docker inspect --format='{{index .RepoDigests 0}}' node:22-slim
+```
+
+## Run Locally
+
+```bash
+docker run --rm -e JUNO_TOKEN=eyJ0b2tlbiI6WyIzMDJhMzAwNTA2MDMyYjY1NzAwMzIxMDA0Y2E0NzhjNmEzMmVkZTgzMmU5OWY3ODBiNjM3ZWE4NDk4MzdhYTY1YTI5YTRlOWNmYmRkYjU1Njc1NGFlNjkwIiwiZjYwMGJhNzRiN2JmYjJiODIzY2VkMWYzYjkzMTY0YzE1NDM2MDBjOTZlZmZmODFhMmU0YmUxZTYxNTU5NGRkYyJdfQ== juno-action --version
 ```
 
 ### References
