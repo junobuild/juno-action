@@ -5,11 +5,9 @@ LABEL stage=builder
 
 # Install required tools
 RUN DEBIAN_FRONTEND=noninteractive apt update && apt install -y \
-    git \
     bash \
     curl \
     build-essential \
-    ca-certificates \
     && rm -rf /var/lib/apt/lists/*
 
 # Create a working user
@@ -59,6 +57,13 @@ LABEL com.github.actions.icon="package"
 LABEL com.github.actions.color="purple"
 
 ENV TZ=UTC
+
+# Install required tools
+RUN DEBIAN_FRONTEND=noninteractive apt update && apt install -y \
+    build-essential \
+    git \
+    ca-certificates \
+    && rm -rf /var/lib/apt/lists/*
 
 # Install Juno's CLI
 RUN npm i -g @junobuild/cli@0.4.0
