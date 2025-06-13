@@ -10,20 +10,22 @@ RUN DEBIAN_FRONTEND=noninteractive apt update && apt install -y \
     build-essential \
     && rm -rf /var/lib/apt/lists/*
 
-# Create and use a user instead of using root
+# Create a working user
 RUN useradd -ms /bin/bash apprunner
-USER apprunner
 
 # Define working directories
-WORKDIR /juno
+RUN mkdir -p /juno && chown apprunner:apprunner /juno
+
+# Use a user instead of using root
+USER apprunner
 
 # Environment variables where files are downloaded and executed
 ENV TARGET_DIR=/juno/target
-RUN echo "export TARGET_DIR=${TARGET_DIR}" >> ./.bashrc
+RUN echo "export TARGET_DIR=${TARGET_DIR}" >> /home/apprunner/.bashrc
 
 # Environment variables for using the Juno source repo
 ENV JUNO_MAIN_DIR=${TARGET_DIR}/juno-main
-RUN echo "export JUNO_MAIN_DIR=${JUNO_MAIN_DIR}" >> ./.bashrc
+RUN echo "export JUNO_MAIN_DIR=${JUNO_MAIN_DIR}" >> /home/apprunner/.bashrc
 
 # Copy list of resources to download
 COPY --chown=apprunner:apprunner ./docker/download ./docker/download
@@ -65,9 +67,6 @@ RUN npm i -g pnpm@10.12.1
 # Create and use a user instead of using root
 RUN useradd -ms /bin/bash apprunner
 USER apprunner
-
-# Define working directories
-WORKDIR /juno
 
 COPY --from=builder --chown=apprunner:apprunner /home/apprunner/.cargo/bin /home/apprunner/.cargo/bin
 
