@@ -24,8 +24,20 @@ docker inspect --format='{{index .RepoDigests 0}}' node:22-slim
 
 ## Run Locally
 
+`juno --version`:
+
 ```bash
 docker run --rm -e JUNO_TOKEN=eyJ0b2tlbiI6WyIzMDJhMzAwNTA2MDMyYjY1NzAwMzIxMDA0Y2E0NzhjNmEzMmVkZTgzMmU5OWY3ODBiNjM3ZWE4NDk4MzdhYTY1YTI5YTRlOWNmYmRkYjU1Njc1NGFlNjkwIiwiZjYwMGJhNzRiN2JmYjJiODIzY2VkMWYzYjkzMTY0YzE1NDM2MDBjOTZlZmZmODFhMmU0YmUxZTYxNTU5NGRkYyJdfQ== juno-action --version
+```
+
+`juno dev build`:
+
+```bash
+docker run --rm \
+ -e JUNO_TOKEN=eyJ0b2tlbiI6WyIzMDJhMzAwNTA2MDMyYjY1NzAwMzIxMDA0Y2E0NzhjNmEzMmVkZTgzMmU5OWY3ODBiNjM3ZWE4NDk4MzdhYTY1YTI5YTRlOWNmYmRkYjU1Njc1NGFlNjkwIiwiZjYwMGJhNzRiN2JmYjJiODIzY2VkMWYzYjkzMTY0YzE1NDM2MDBjOTZlZmZmODFhMmU0YmUxZTYxNTU5NGRkYyJdfQ==  \
+ -v "$(pwd)":/project \
+ -w /project \
+ juno-action dev build
 ```
 
 ### References
