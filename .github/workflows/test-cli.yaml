@@ -1,4 +1,4 @@
-name: Test Juno CLI runs from Docker image
+name: Test Juno CLI runs from Docker images
 
 on:
   workflow_dispatch:
