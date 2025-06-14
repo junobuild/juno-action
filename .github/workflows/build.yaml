@@ -1,4 +1,4 @@
-name: Build Docker Image
+name: Build Docker Images
 
 on:
   workflow_dispatch:
@@ -7,10 +7,13 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        dockerfile: [ Dockerfile, Dockerfile.full ]
     steps:
       # Action: https://github.com/actions/checkout/releases/tag/v4.2.2
       - name: Check out the repo
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
 
-      - name: Build the Docker image
-        run: docker build . --file Dockerfile
+      - name: Build Docker image ${{ matrix.dockerfile }}
+        run: docker build . --file ${{ matrix.dockerfile }}
