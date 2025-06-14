@@ -1,4 +1,4 @@
-name: Test Juno CLI runs from Docker image
+name: Test Juno CLI runs from Docker images
 
 on:
   workflow_dispatch:
@@ -7,6 +7,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        dockerfile: [ Dockerfile, Dockerfile.full ]
     steps:
       # Action: https://github.com/actions/checkout/releases/tag/v4.2.2
       - name: Check out the repo
@@ -21,15 +24,15 @@ jobs:
         uses: docker/build-push-action@263435318d21b8e681c14492fe198d362a7d2c83
         with:
           context: .
-          file: Dockerfile
+          file: ${{ matrix.dockerfile }}
           load: true
-          tags: juno-action:latest
+          tags: juno-action:test-${{ matrix.dockerfile == 'Dockerfile.full' && 'full' || 'slim' }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
       - name: Test Juno CLI version
         run: |
-          OUTPUT=$(docker run --rm -e JUNO_TOKEN="${{ secrets.JUNO_TOKEN }}" juno-action version --cli)
+          OUTPUT=$(docker run --rm -e JUNO_TOKEN="${{ secrets.JUNO_TOKEN }}" juno-action:test-${{ matrix.dockerfile == 'Dockerfile.full' && 'full' || 'slim' }} version --cli)
           echo "$OUTPUT"
           if [[ "$OUTPUT" != *"v0.4.0"* ]]; then
             echo "❌ Expected version v0.4.0 not found in output"
