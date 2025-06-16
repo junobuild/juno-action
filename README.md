@@ -43,6 +43,23 @@ jobs:
           JUNO_TOKEN: ${{ secrets.JUNO_TOKEN }}
 ```
 
+## Available Action Versions
+
+You can choose from several action variants depending on your needs:
+
+| Version tag          | Description                                                         |
+|----------------------|---------------------------------------------------------------------|
+| `@main` or no tag    | Defaults to the **slim** image                                      |
+| `@slim`              | Explicitly use the **slim** image                                   |
+| `@full`              | Use the **full** image                                              |
+| `@vX.Y.Z`            | Specific version tag for **slim**                                   |
+| `@vX.Y.Z-slim`       | Versioned **slim** image                                            |
+| `@vX.Y.Z-full`       | Versioned **full** image                                            |
+
+The **slim** image does not include the Rust toolchain or tools required to build serverless functions. It is smaller in size and suitable for most CLI use cases.
+
+The **full** image includes the Rust toolchain and all necessary tools for building serverless functions, resulting in a larger image size.
+
 ## License
 
 MIT © [David Dal Busco](mailto:david.dalbusco@outlook.com)
