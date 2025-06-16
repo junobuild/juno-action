@@ -6,6 +6,7 @@ Here are a few useful Docker commands that can be used for local development.
 
 ```bash
 docker build . --file Dockerfile -t juno-action --progress=plain --no-cache
+docker build . --file Dockerfile.full -t juno-action --progress=plain --no-cache --platform=linux/amd64
 ```
 
 ### Inspect Size
