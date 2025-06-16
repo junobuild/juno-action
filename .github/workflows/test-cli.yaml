@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        dockerfile: [ Dockerfile, Dockerfile.full ]
+        dockerfile: [ Dockerfile.slim, Dockerfile.full ]
     steps:
       # Action: https://github.com/actions/checkout/releases/tag/v4.2.2
       - name: Check out the repo
