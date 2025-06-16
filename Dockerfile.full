@@ -86,6 +86,12 @@ ENV CARGO_HOME=/home/apprunner/.cargo \
     RUSTUP_HOME=/home/apprunner/.rustup \
     PATH=/home/apprunner/.cargo/bin:$PATH
 
+# Copy Juno main repo sources and configuration for building serverless functions in TS/JS
+COPY --from=builder --chown=apprunner:apprunner /juno/target/juno-main/src /juno/src
+COPY --from=builder --chown=apprunner:apprunner /juno/target/juno-main/Cargo.lock /juno/Cargo.lock
+COPY --from=builder --chown=apprunner:apprunner /juno/target/juno-main/Cargo.toml /juno/Cargo.toml
+COPY --from=builder --chown=apprunner:apprunner /juno/target/juno-main/rust-toolchain.toml /juno/rust-toolchain.toml
+
 # Resolves cargo build error:
 # network failure seems to have happened
 # if a proxy or similar is necessary `net.git-fetch-with-cli` may help here
