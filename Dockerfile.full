@@ -61,6 +61,7 @@ ENV TZ=UTC
 # Install required tools
 RUN DEBIAN_FRONTEND=noninteractive apt update && apt install -y \
     build-essential \
+    curl \
     git \
     ca-certificates \
     && rm -rf /var/lib/apt/lists/*
