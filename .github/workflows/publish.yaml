@@ -1,4 +1,4 @@
-name: Publish Docker image
+name: Publish Docker images
 
 on:
   release:
@@ -6,8 +6,15 @@ on:
 
 jobs:
   push_to_registry:
-    name: Push Docker image to Docker Hub
+    name: Push Docker images to Docker Hub
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        variant: [ slim, full ]
+    env:
+      IMAGE_NAME: junobuild/action
+      VERSION: ${{ github.ref_name }}
+
     steps:
       # Action: https://github.com/actions/checkout/releases/tag/v4.2.2
       - name: Check out the repo
@@ -20,22 +27,14 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_TOKEN }}
 
-      # Action: https://github.com/docker/metadata-action/releases/tag/v5.7.0
-      - name: Extract metadata (tags, labels) for Docker
-        id: meta
-        uses: docker/metadata-action@902fa8ec7d6ecbf8d84d538b9b233a880e428804
-        with:
-          images: junobuild/action
-          tags: |
-            type=semver,pattern={{major}}
-            type=semver,pattern={{version}}
-
       # Action: https://github.com/docker/build-push-action/releases/tag/v6.18.0
       - name: Build and push
         uses: docker/build-push-action@263435318d21b8e681c14492fe198d362a7d2c83
         with:
           context: .
-          file: ./Dockerfile
+          file: ${{ matrix.variant == 'full' && 'Dockerfile.full' || 'Dockerfile' }}
           push: true
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
+          tags: |
+            ${{ env.IMAGE_NAME }}:${{ env.VERSION }}${{ matrix.variant == 'full' && '-full' || '' }}
+            ${{ env.IMAGE_NAME }}:${{ matrix.variant == 'slim' && 'slim' || 'full' }}
+            ${{ env.IMAGE_NAME }}:${{ matrix.variant == 'slim' && 'latest' || 'full' }}
