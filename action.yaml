@@ -12,4 +12,4 @@ outputs:
 
 runs:
   using: 'docker'
-  image: 'docker://junobuild/action:0.3.2'
+  image: 'docker://junobuild/action:0.3.2-slim'
