@@ -1,0 +1,33 @@
+name: Update Git Tags on Release
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  tag-refs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: main
+
+      - name: Fetch all branches
+        run: git fetch origin slim full
+
+      - name: Create or update tags
+        env:
+          RELEASE_TAG: ${{ github.ref_name }}
+        run: |
+          echo "Creating ${RELEASE_TAG}-slim -> origin/slim"
+          git tag -f "${RELEASE_TAG}-slim" origin/slim
+          
+          echo "Creating ${RELEASE_TAG}-full -> origin/full"
+          git tag -f "${RELEASE_TAG}-full" origin/full
+
+          # Push the tags forcefully
+          git push origin --force \
+            "${RELEASE_TAG}-slim" \
+            "${RELEASE_TAG}-full"
