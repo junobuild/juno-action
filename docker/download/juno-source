@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+DIR="$TARGET_DIR"
+
+if [ ! -d "$DIR" ]; then
+  mkdir "$DIR"
+fi
+
+# Use a specific commit
+# COMMIT=9c42f96920a768afa5a2ea24c038b699c40491d5
+# SOURCE_FOLDER="juno-$COMMIT"
+# curl -L -o "$DIR/juno.tar.gz" https://github.com/junobuild/juno/archive/$COMMIT.tar.gz
+
+# Use a release tag
+# TAG=v0.0.48
+# SOURCE_FOLDER="juno-${TAG#v}"
+# curl -L -o "$DIR/juno.tar.gz" https://github.com/junobuild/juno/archive/refs/tags/$TAG.tar.gz
+
+# Use main
+BRANCH=main
+SOURCE_FOLDER="juno-$BRANCH"
+curl -L -o "$DIR/juno.tar.gz" https://github.com/junobuild/juno/archive/refs/heads/$BRANCH.tar.gz
+
+tar -xf "$DIR/juno.tar.gz" -C "$DIR"
+
+# Rename the extracted folder to juno-main if branch is not main
+# mv "$DIR/$SOURCE_FOLDER" "$JUNO_MAIN_DIR"
+
+echo "juno source downloaded and extracted to $JUNO_MAIN_DIR."

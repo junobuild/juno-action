@@ -4,3 +4,5 @@
 !entrypoint.sh
 !LICENSE
 !README.md
+!docker/**
+!kit/**
