@@ -39,7 +39,7 @@ ENV RUSTUP_HOME=/home/apprunner/.rustup \
     PATH=/home/apprunner/.cargo/bin:$PATH
 
 # Copy list of scripts to run setup
-COPY --chown=apprunner:apprunner ./kit/setup ./kit/setup
+COPY --chown=apprunner:apprunner ./kit/setup/bootstrap ./kit/setup/bootstrap
 
 # Install tools for building WASM with the action
 RUN ./kit/setup/bootstrap
@@ -66,11 +66,10 @@ RUN DEBIAN_FRONTEND=noninteractive apt update && apt install -y \
     ca-certificates \
     && rm -rf /var/lib/apt/lists/*
 
-# Install Juno's CLI
-RUN npm i -g @junobuild/cli@next
 
-# Install pnpm which is not part of the default image
-RUN npm i -g pnpm@10.12.1
+# Install Pnpm and Juno's CLI
+COPY ./kit/setup/tools ./kit/setup/tools
+RUN ./kit/setup/tools
 
 # Create and use a user instead of using root
 RUN useradd -ms /bin/bash apprunner
