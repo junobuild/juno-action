@@ -38,6 +38,6 @@ jobs:
           file: ${{ matrix.dockerfile }}
           push: true
           tags: |
-            ${{ env.IMAGE_NAME }}:${{ env.VERSION }}${{ contains(matrix.dockerfile, 'full') && '-full' || '' }}
+            ${{ env.IMAGE_NAME }}:${{ env.VERSION }}${{ contains(matrix.dockerfile, 'full') && '-full' || (contains(matrix.dockerfile, 'slim') && '-slim' || '') }}
             ${{ env.IMAGE_NAME }}:${{ contains(matrix.dockerfile, 'slim') && 'slim' || 'full' }}
             ${{ env.IMAGE_NAME }}:${{ contains(matrix.dockerfile, 'slim') && 'latest' || 'full' }}
