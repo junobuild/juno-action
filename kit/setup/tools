@@ -2,6 +2,6 @@
 
 set -e
 
-npm i -g @junobuild/cli@0.9.4
+npm i -g @junobuild/cli@0.9.5
 
 npm i -g pnpm@10.17.0
