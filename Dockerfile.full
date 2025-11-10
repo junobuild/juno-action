@@ -1,5 +1,5 @@
 # --- Build Stage ---
-FROM node:22-slim@sha256:048ed02c5fd52e86fda6fbd2f6a76cf0d4492fd6c6fee9e2c463ed5108da0e34 AS builder
+FROM node:24-slim@sha256:76d0ed0ed93bed4f4376211e9d8fddac4d8b3fbdb54cc45955696001a3c91152 AS builder
 
 LABEL stage=builder
 
@@ -45,7 +45,7 @@ COPY --chown=apprunner:apprunner ./kit/setup/bootstrap ./kit/setup/bootstrap
 RUN ./kit/setup/bootstrap
 
 # --- Runtime Stage ---
-FROM node:22-slim@sha256:048ed02c5fd52e86fda6fbd2f6a76cf0d4492fd6c6fee9e2c463ed5108da0e34
+FROM node:24-slim@sha256:76d0ed0ed93bed4f4376211e9d8fddac4d8b3fbdb54cc45955696001a3c91152
 
 LABEL repository="https://github.com/junobuild/juno-action"
 LABEL homepage="https://juno.build"
