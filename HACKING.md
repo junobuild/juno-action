@@ -19,8 +19,8 @@ docker image inspect 45c21d84fe24 --format='{{.Size}}' | awk '{printf "%.2f MB\n
 ### Pin Base Image
 
 ```bash
-docker pull node:22-slim
-docker inspect --format='{{index .RepoDigests 0}}' node:22-slim
+docker pull node:24-slim
+docker inspect --format='{{index .RepoDigests 0}}' node:24-slim
 ```
 
 ## Run Locally
