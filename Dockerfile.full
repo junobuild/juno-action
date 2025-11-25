@@ -38,11 +38,19 @@ ENV RUSTUP_HOME=/home/apprunner/.rustup \
     CARGO_HOME=/home/apprunner/.cargo \
     PATH=/home/apprunner/.cargo/bin:$PATH
 
+# Configure npm to install globally to user directory
+ENV NPM_CONFIG_PREFIX=/home/apprunner/.npm-global \
+    PATH=/home/apprunner/.npm-global/bin:$PATH
+
 # Copy list of scripts to run setup
 COPY --chown=apprunner:apprunner ./kit/setup/bootstrap ./kit/setup/bootstrap
+COPY --chown=apprunner:apprunner ./kit/setup/addons ./kit/setup/addons
 
-# Install tools for building WASM with the action
+# Install core tools required for building WASM (same as in the main Juno repository)
 RUN ./kit/setup/bootstrap
+
+# Install extra WASM build tools needed only for this GitHub Action
+RUN ./kit/setup/addons
 
 # --- Runtime Stage ---
 FROM node:24-slim@sha256:76d0ed0ed93bed4f4376211e9d8fddac4d8b3fbdb54cc45955696001a3c91152
