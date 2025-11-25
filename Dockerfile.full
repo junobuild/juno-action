@@ -72,6 +72,7 @@ COPY ./kit/setup/tools ./kit/setup/tools
 RUN ./kit/setup/tools
 
 # Install extra WASM build tools - e.g. for Sputnik - required by the GitHub Action runtime
+COPY ./kit/setup/addons ./kit/setup/addons
 RUN ./kit/setup/addons
 
 # Create and use a user instead of using root
