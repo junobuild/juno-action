@@ -40,7 +40,6 @@ ENV RUSTUP_HOME=/home/apprunner/.rustup \
 
 # Copy list of scripts to run setup
 COPY --chown=apprunner:apprunner ./kit/setup/bootstrap ./kit/setup/bootstrap
-COPY --chown=apprunner:apprunner kit/setup/addons ./kit/setup/addons
 
 # Install core tools required for building WASM (same as in the main Juno repository)
 RUN ./kit/setup/bootstrap
