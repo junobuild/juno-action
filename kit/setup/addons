@@ -1,0 +1,5 @@
+#!/bin/sh
+
+set -e
+
+npm i -g @icp-sdk/bindgen@0.2.0
