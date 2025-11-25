@@ -38,6 +38,10 @@ ENV RUSTUP_HOME=/home/apprunner/.rustup \
     CARGO_HOME=/home/apprunner/.cargo \
     PATH=/home/apprunner/.cargo/bin:$PATH
 
+# Configure npm to install globally to user directory
+ENV NPM_CONFIG_PREFIX=/home/apprunner/.npm-global \
+    PATH=/home/apprunner/.npm-global/bin:$PATH
+
 # Copy list of scripts to run setup
 COPY --chown=apprunner:apprunner ./kit/setup/bootstrap ./kit/setup/bootstrap
 COPY --chown=apprunner:apprunner ./kit/setup/addons ./kit/setup/addons
