@@ -34,8 +34,8 @@ jobs:
         run: |
           OUTPUT=$(docker run --rm -e JUNO_TOKEN="${{ secrets.JUNO_TOKEN }}" juno-action:test-${{ matrix.dockerfile == 'Dockerfile.full' && 'full' || 'slim' }} version --cli)
           echo "$OUTPUT"
-          if [[ "$OUTPUT" != *"v0.13.4"* ]]; then
-            echo "❌ Expected version v0.13.4 not found in output"
+          if [[ "$OUTPUT" != *"v0.13.8"* ]]; then
+            echo "❌ Expected version v0.13.8 not found in output"
             exit 1
           fi
         shell: bash
