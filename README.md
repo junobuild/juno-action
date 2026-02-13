@@ -32,7 +32,7 @@ export default defineConfig({
           {
             owner: "your-org", // or user name, e.g. peterpeterparker
             name: "your-repo", 
-            refs: [] // Optional: restrict to specific referencess, e.g. ["refs/heads/main", "refs/pull/47/merge"]
+            refs: [] // Optional: restrict to specific refs, e.g. ["refs/heads/main"]
           }
         ]
       }
