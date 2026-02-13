@@ -15,7 +15,7 @@ CLEANUP_TOKEN=""
 
 cleanup() {
   if [ -n "$CLEANUP_TOKEN" ]; then
-    (npm run clean --prefix /kit/token) || true
+    (npm run clean --prefix ./kit/token) || true
   fi
 }
 
@@ -28,27 +28,26 @@ echo "2"
 if [ -z "$JUNO_TOKEN" ]; then
   echo "3"
 
-  OUTPUT=$(npm run auth --prefix /kit/token)
+  JUNO_TOKEN=$(npm run auth --prefix /kit/token)
+  EXIT_CODE=$?
 
-  RESULT=$(echo "$OUTPUT" | tail -n 1)
-  STATUS=$(echo "$RESULT" | jq -r '.status')
-
-  case "$STATUS" in
-    success)
-      JUNO_TOKEN=$(echo "$RESULT" | jq -r '.token')
+  case $EXIT_CODE in
+    0)
       echo "::add-mask::$JUNO_TOKEN"
       export JUNO_TOKEN
       CLEANUP_TOKEN="true"
       ;;
-    error)
+    1)
+      # An error happened
       exit 1
       ;;
     *)
-      # skip - continue without token
+      # Skip
       ;;
   esac
 
   echo "4"
+
 fi
 
 echo "5"

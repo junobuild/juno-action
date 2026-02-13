@@ -14,6 +14,6 @@ export const logError = (err: unknown) => {
   const message = prettifyError(err);
 
   if (nonNullish(message)) {
-    console.log(message);
+    console.error(message);
   }
 };
