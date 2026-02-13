@@ -2,6 +2,11 @@
 
 set -e
 
+echo "**********"
+ls -la /kit/token
+pwd
+echo "**********"
+
 if [ -n "$PROJECT_PATH" ]; then
   cd "$PROJECT_PATH"
 fi

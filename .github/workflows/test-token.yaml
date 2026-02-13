@@ -38,18 +38,6 @@ jobs:
       - name: Debug
         run: docker run --rm -e JUNO_TOKEN="${{ secrets.JUNO_TOKEN }}" juno-action:test-${{ matrix.dockerfile == 'Dockerfile.full' && 'full' || 'slim' }} version --cli
 
-      - name: Debug Workdir
-        run: docker run --rm juno-action:test-${{ matrix.dockerfile == 'Dockerfile.full' && 'full' || 'slim' }} -c "pwd"
-
-      - name: Debug - Check container
-        run: |
-          docker run --rm \
-            --network host \
-            -v ${{ github.workspace }}:/workspace \
-            -e PROJECT_PATH=/workspace/e2e \
-            juno-action:test-slim \
-            -c "ls -la /kit/token"
-
       - name: Deploy with OIDC authentication
         run: |
           docker run --rm \
