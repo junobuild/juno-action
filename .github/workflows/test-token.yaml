@@ -35,8 +35,8 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
-      - name: Debug - Check WORKDIR
-        run: docker run --rm juno-action:test-slim pwd
+      - name: Debug
+        run: docker run --rm -e JUNO_TOKEN="${{ secrets.JUNO_TOKEN }}" juno-action:test-${{ matrix.dockerfile == 'Dockerfile.full' && 'full' || 'slim' }} version --cli
 
       - name: Debug - Check container
         run: |
