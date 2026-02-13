@@ -39,6 +39,6 @@ jobs:
           push: true
           tags: |
             ${{ env.IMAGE_NAME }}:${{ env.VERSION }}${{ contains(matrix.dockerfile, 'full') && '-full' || (contains(matrix.dockerfile, 'slim') && '-slim' || '') }}
-            ${{ env.IMAGE_NAME }}:${{ contains(matrix.dockerfile, 'slim') && 'slim' || 'full' }}
-            ${{ env.IMAGE_NAME }}:${{ contains(matrix.dockerfile, 'slim') && 'latest' || 'full' }}
-            ${{ contains(matrix.dockerfile, 'slim') && format('{0}:{1}', env.IMAGE_NAME, env.VERSION) || '' }}
+            ${{ !github.event.release.prerelease && env.IMAGE_NAME }}:${{ contains(matrix.dockerfile, 'slim') && 'slim' || 'full' }}
+            ${{ !github.event.release.prerelease && env.IMAGE_NAME }}:${{ contains(matrix.dockerfile, 'slim') && 'latest' || 'full' }}
+            ${{ !github.event.release.prerelease && contains(matrix.dockerfile, 'slim') && format('{0}:{1}', env.IMAGE_NAME, env.VERSION) || '' }}
