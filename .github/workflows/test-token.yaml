@@ -35,6 +35,9 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
+      - name: Debug - Check WORKDIR
+        run: docker run --rm juno-action:test-slim pwd
+
       - name: Debug - Check container
         run: |
           docker run --rm \
