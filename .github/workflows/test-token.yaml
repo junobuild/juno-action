@@ -35,6 +35,12 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
+      - name: Debug GitHub context
+        run: |
+          echo "Ref: ${{ github.ref }}"
+          echo "Head ref: ${{ github.head_ref }}"
+          echo "Base ref: ${{ github.base_ref }}"
+
       - name: Deploy with OIDC authentication
         run: |
           docker run --rm \
