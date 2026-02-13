@@ -43,7 +43,7 @@ jobs:
             -e PROJECT_PATH=/workspace/e2e \
             -e ACTIONS_ID_TOKEN_REQUEST_URL \
             -e ACTIONS_ID_TOKEN_REQUEST_TOKEN \
-            juno-action:test \
+            juno-action:test-${{ matrix.dockerfile == 'Dockerfile.full' && 'full' || 'slim' }} \
             hosting deploy
 
   may-merge:
