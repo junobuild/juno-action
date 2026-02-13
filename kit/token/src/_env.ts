@@ -44,7 +44,7 @@ export const loadEnv = async (): Promise<
   const {satelliteId} = assertAndReadSatelliteId({satellite, env});
 
   if (isEmptyString(satelliteId)) {
-    console.log(`‼️ A satellite ID for ${env.mode} must be set in your configuration.`);
+    console.log(`❌ A satellite ID for ${env.mode} must be set in your configuration.`);
     return {result: 'error'};
   }
 
@@ -52,9 +52,9 @@ export const loadEnv = async (): Promise<
   const tokenRequestToken = process.env.ACTIONS_ID_TOKEN_REQUEST_TOKEN;
 
   if (isEmptyString(tokenRequestUrl) || isEmptyString(tokenRequestToken)) {
-    console.log('ℹ️  No GitHub Actions token available. Skipping automation authentication.');
+    console.log('ℹ️  GitHub Actions OIDC token not available. Skipping automation authentication.');
     console.log(
-      '💡  If not expected, ensure "id-token: write" permission is set within your action.'
+      '💡 Ensure "id-token: write" permission is set in your workflow if this is unexpected.'
     );
     return {result: 'skip'};
   }

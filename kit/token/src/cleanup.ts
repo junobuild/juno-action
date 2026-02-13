@@ -3,6 +3,7 @@ import {deleteController} from './_controller';
 import {loadEnv} from './_env';
 import {logError} from './_error';
 import {decodeToken} from './_token';
+import {Ed25519KeyIdentity} from '@icp-sdk/core/identity';
 
 const maybeEnv = await loadEnv();
 
@@ -28,10 +29,21 @@ if ('err' in maybeToken) {
 }
 
 const {token} = maybeToken;
+const identity = Ed25519KeyIdentity.fromParsedJson(token);
+
 const {
   env: {satelliteId}
 } = maybeEnv;
 
-await deleteController({token, satelliteId});
+const result = await deleteController({identity, satelliteId});
 
-console.log('🗑️  Access key used for automation cleaned.');
+if (result.result === 'error') {
+  console.log(`An unexpected error occurred while cleaning up the automation access key 😫.`);
+
+  const {err} = result;
+  logError(err);
+
+  process.exit(1);
+}
+
+console.log(`🗑️  Removed automation access key ${identity.getPrincipal().toText()}`);

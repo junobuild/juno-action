@@ -27,7 +27,9 @@ if (result.result === 'error') {
   process.exit(1);
 }
 
-const {token} = result;
+const {token, id} = result;
+
+console.log(`🔑 Automation authenticated with key ${id.toString()}`);
 
 // Create a base64 representation of the token (identity key) and print it to the console.
 // The caller - the action - will take care of injecting in the process while hiding it from the logs of the action.

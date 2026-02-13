@@ -1,6 +1,7 @@
-import type {JsonnableEd25519KeyIdentity} from '@icp-sdk/core/identity';
-import {authenticateAutomation} from '@junobuild/auth/automation';
 import {PrincipalText} from '@dfinity/zod-schemas';
+import type {JsonnableEd25519KeyIdentity} from '@icp-sdk/core/identity';
+import {Principal} from '@icp-sdk/core/principal';
+import {authenticateAutomation} from '@junobuild/auth/automation';
 
 export const authenticate = async ({
   oidcRequest: {url: requestUrl, token: requestToken},
@@ -12,7 +13,8 @@ export const authenticate = async ({
   };
   satelliteId: PrincipalText;
 }): Promise<
-  {result: 'success'; token: JsonnableEd25519KeyIdentity} | {result: 'error'; err: unknown}
+  | {result: 'success'; id: Principal; token: JsonnableEd25519KeyIdentity}
+  | {result: 'error'; err: unknown}
 > => {
   // Request the OIDC token from GitHub
   const generateJwt = async ({nonce}: {nonce: string}) => {
@@ -49,7 +51,8 @@ export const authenticate = async ({
 
     return {
       result: 'success',
-      token: identity.toJSON()
+      token: identity.toJSON(),
+      id: identity.getPrincipal()
     };
   } catch (err: unknown) {
     return {result: 'error', err};

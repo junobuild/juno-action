@@ -14,6 +14,5 @@ fi
 
 # TODO: trap cleanup
 # TODO: docker integration
-# TODO: review JS messages
 
 exec juno "$@" --headless
