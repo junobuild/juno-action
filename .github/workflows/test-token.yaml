@@ -26,7 +26,8 @@ jobs:
         uses: ./
         with:
           args: hosting deploy
-          project_path: ./e2e
+        env:
+          PROJECT_PATH: ./e2e
 
   may-merge:
     needs: ['test-token']
