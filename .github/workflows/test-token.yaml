@@ -35,6 +35,15 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
+      - name: Debug - Check container
+        run: |
+          docker run --rm \
+            --network host \
+            -v ${{ github.workspace }}:/workspace \
+            -e PROJECT_PATH=/workspace/e2e \
+            juno-action:test-slim \
+            ls -la /kit/token
+
       - name: Deploy with OIDC authentication
         run: |
           docker run --rm \
