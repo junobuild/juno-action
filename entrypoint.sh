@@ -30,8 +30,12 @@ if [ -z "$JUNO_TOKEN" ]; then
       # An error happened
       exit 1
       ;;
-    *)
+    42)
       # Skip
+      ;;
+    *)
+      # Unexpected error
+      exit 1
       ;;
   esac
 fi
