@@ -2,8 +2,8 @@ import {isEmptyString} from '@dfinity/utils';
 import {nextArg} from '@junobuild/cli-tools';
 import type {JunoConfigEnv} from '@junobuild/config';
 import type {ActorParameters} from '@junobuild/ic-client/actor';
-import {readConfig} from './_config';
-import {assertAndReadSatelliteId} from './_satellite';
+import {readConfig} from './_config.ts';
+import {assertAndReadSatelliteId} from './_satellite.ts';
 
 export type Env = {
   oidcRequest: {

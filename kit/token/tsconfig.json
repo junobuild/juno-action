@@ -8,6 +8,7 @@
     "esModuleInterop": true,
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
-    "allowJs": true
+    "allowJs": true,
+    "allowImportingTsExtensions": true
   }
 }

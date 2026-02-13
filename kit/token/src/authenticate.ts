@@ -1,7 +1,7 @@
-import {authenticate} from './_authenticate';
-import {loadEnv} from './_env';
-import {logError} from './_error';
-import {encodeToken} from './_token';
+import {authenticate} from './_authenticate.ts';
+import {loadEnv} from './_env.ts';
+import {logError} from './_error.ts';
+import {encodeToken} from './_token.ts';
 
 const maybeEnv = await loadEnv();
 
