@@ -20,7 +20,7 @@ if (isEmptyString(envToken)) {
 const maybeToken = decodeToken(envToken);
 
 if ('err' in maybeToken) {
-  console.log('Cannot parse token provided as an environment variable.');
+  console.error('Cannot parse token provided as an environment variable.');
 
   const {err} = maybeToken;
   logError(err);
@@ -36,7 +36,7 @@ const {env} = maybeEnv;
 const result = await deleteController({identity, env});
 
 if (result.result === 'error') {
-  console.log(`An unexpected error occurred while cleaning up the automation access key 😫.`);
+  console.error(`An unexpected error occurred while cleaning up the automation access key 😫.`);
 
   const {err} = result;
   logError(err);

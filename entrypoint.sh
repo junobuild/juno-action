@@ -10,18 +10,30 @@ CLEANUP_TOKEN=""
 
 cleanup() {
   if [ -n "$CLEANUP_TOKEN" ]; then
-    (cd ./kit/token && npm run clean 2>&1) || true
+    (node /kit/token/src/cleanup.ts) || true
   fi
 }
 
 trap cleanup EXIT
 
 if [ -z "$JUNO_TOKEN" ]; then
-  JUNO_TOKEN=$(cd ./kit/token && npm run auth 2>&1)
-  echo "::add-mask::$JUNO_TOKEN"
-  export JUNO_TOKEN
+  JUNO_TOKEN=$(node /kit/token/src/authenticate.ts)
+  EXIT_CODE=$?
 
-  CLEANUP_TOKEN="true"
+  case $EXIT_CODE in
+    0)
+      echo "::add-mask::$JUNO_TOKEN"
+      export JUNO_TOKEN
+      CLEANUP_TOKEN="true"
+      ;;
+    1)
+      # An error happened
+      exit 1
+      ;;
+    *)
+      # Skip
+      ;;
+  esac
 fi
 
 juno "$@" --headless

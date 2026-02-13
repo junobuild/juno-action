@@ -1,6 +1,6 @@
 import type {Ed25519KeyIdentity} from '@icp-sdk/core/identity';
 import {deleteSatelliteControllerSelf} from '@junobuild/admin';
-import type {Env} from './_env';
+import type {Env} from './_env.ts';
 
 export const deleteController = async ({
   identity,
