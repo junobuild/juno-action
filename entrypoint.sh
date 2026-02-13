@@ -28,14 +28,27 @@ echo "2"
 if [ -z "$JUNO_TOKEN" ]; then
   echo "3"
 
-  JUNO_TOKEN=$(npm run auth --prefix /kit/token)
+  OUTPUT=$(npm run auth --prefix /kit/token)
+
+  RESULT=$(echo "$OUTPUT" | tail -n 1)
+  STATUS=$(echo "$RESULT" | jq -r '.status')
+
+  case "$STATUS" in
+    success)
+      JUNO_TOKEN=$(echo "$RESULT" | jq -r '.token')
+      echo "::add-mask::$JUNO_TOKEN"
+      export JUNO_TOKEN
+      CLEANUP_TOKEN="true"
+      ;;
+    error)
+      exit 1
+      ;;
+    *)
+      # skip - continue without token
+      ;;
+  esac
 
   echo "4"
-
-  echo "::add-mask::$JUNO_TOKEN"
-  export JUNO_TOKEN
-
-  CLEANUP_TOKEN="true"
 fi
 
 echo "5"
