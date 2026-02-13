@@ -7,7 +7,7 @@ const maybeEnv = await loadEnv();
 
 switch (maybeEnv.result) {
   case 'skip':
-    process.exit(2);
+    process.exit(42);
     break;
   case 'error':
     process.exit(1);
