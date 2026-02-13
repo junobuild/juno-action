@@ -39,9 +39,8 @@ jobs:
         run: |
           docker run --rm \
             --network host \
-            -v $PWD:/github/workspace \
-            -w /github/workspace \
-            -e PROJECT_PATH=/workspace/e2e \
+            -v ${{ github.workspace }}/e2e:/workspace \
+            -e PROJECT_PATH=/workspace \
             -e ACTIONS_ID_TOKEN_REQUEST_URL \
             -e ACTIONS_ID_TOKEN_REQUEST_TOKEN \
             juno-action:test-${{ matrix.dockerfile == 'Dockerfile.full' && 'full' || 'slim' }} \
