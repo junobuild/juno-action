@@ -1,16 +1,85 @@
 # Juno Action
 
-This GitHub Action for [Juno] enables arbitrary actions with the [command-line client]((https://github.com/junobuild/cli)).
+This GitHub Action for [Juno] enables arbitrary actions with the [command-line client](https://github.com/junobuild/cli).
 
-## Environment variables
+## Authentication
 
-- `JUNO_TOKEN`: The token to use for authentication. It can be generated through Juno's [console](https://console.juno.build). Prefer a controller with "Read-write" permission rather than administrator.
+The action supports two authentication methods:
 
-- `PROJECT_PATH` - **Optional**. The path to the folder containing `juno.config.ts|js|json` if it doesn't exist at the root of your repository. e.g. `./my-app`.
+### 1. GitHub OIDC (Recommended)
 
-## Example
+Authenticate automatically using GitHub's OpenID Connect tokens. No secrets required!
 
-To deploy a release of your dapp to Juno with a GitHub Action:
+**Requirements:**
+
+- Add `id-token: write` permission to your workflow
+- Configure your Satellite to support automation
+
+**Example configuration:**
+
+```typescript
+import { defineConfig } from "@junobuild/config";
+
+export default defineConfig({
+  satellite: {
+    ids: {
+        development: "<DEV_SATELLITE_ID>",
+        production: "<PROD_SATELLITE_ID>"
+    },
+    automation: {
+      github: {
+        repositories: [
+          {
+            owner: "your-org", // or user name, e.g. peterpeterparker
+            name: "your-repo", 
+            refs: [] // Optional: restrict to specific refs, e.g. ["refs/heads/main"]
+          }
+        ]
+      }
+    }
+  }
+});
+```
+
+**Workflow example:**
+
+```yaml
+name: Deploy to Juno
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    permissions:
+      id-token: write  # Required for GitHub OIDC
+      contents: read
+    
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          registry-url: "https://registry.npmjs.org"
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Deploy to Juno
+        uses: junobuild/juno-action
+        with:
+          args: hosting deploy
+```
+
+### 2. Token Authentication (Legacy)
+
+Use a manually generated token from Juno's console. Prefer an access key with "Read-write" permission rather than administrator.
 
 ```yaml
 name: Deploy to Juno
@@ -38,10 +107,14 @@ jobs:
       - name: Deploy to Juno
         uses: junobuild/juno-action
         with:
-          args: deploy
+          args: hosting deploy
         env:
           JUNO_TOKEN: ${{ secrets.JUNO_TOKEN }}
 ```
+
+## Configuration
+
+- `PROJECT_PATH` - **Optional**. The path to the folder containing `juno.config.ts|js|json` if it doesn't exist at the root of your repository. e.g. `./my-app`.
 
 ## Available Action Versions
 
