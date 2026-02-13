@@ -13,10 +13,6 @@ LABEL com.github.actions.color="purple"
 COPY ./kit/setup/tools ./kit/setup/tools
 RUN ./kit/setup/tools
 
-# Install token automation
-COPY ./kit/token ./kit/token
-RUN npm ci --prefix ./kit/token
-
 COPY LICENSE README.md /
 COPY "entrypoint.sh" "/entrypoint.sh"
 

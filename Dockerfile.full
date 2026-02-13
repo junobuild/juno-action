@@ -75,10 +75,6 @@ RUN ./kit/setup/tools
 COPY ./kit/setup/addons ./kit/setup/addons
 RUN ./kit/setup/addons
 
-# Install token automation
-COPY ./kit/token ./kit/token
-RUN npm ci --prefix ./kit/token
-
 # Create and use a user instead of using root
 RUN useradd -ms /bin/bash apprunner
 USER apprunner
