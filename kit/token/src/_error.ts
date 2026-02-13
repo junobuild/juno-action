@@ -18,6 +18,6 @@ export const logError = (err: unknown) => {
   }
 
   if (err instanceof Error && err.cause) {
-    console.error('Cause:', err.cause);
+    console.dir(err.cause, {depth: null});
   }
 };
