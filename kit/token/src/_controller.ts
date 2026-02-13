@@ -1,5 +1,5 @@
 import type {Ed25519KeyIdentity} from '@icp-sdk/core/identity';
-import {deleteSatelliteControllers} from '@junobuild/admin';
+import {deleteSatelliteControllerSelf} from '@junobuild/admin';
 import type {Env} from './_env';
 
 export const deleteController = async ({
@@ -10,10 +10,7 @@ export const deleteController = async ({
   env: Pick<Env, 'satelliteId' | 'container'>;
 }): Promise<{result: 'success'} | {result: 'error'; err: unknown}> => {
   try {
-    await deleteSatelliteControllers({
-      args: {
-        controllers: [identity.getPrincipal()]
-      },
+    await deleteSatelliteControllerSelf({
       satellite: {
         identity,
         container,
