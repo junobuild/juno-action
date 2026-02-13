@@ -9,11 +9,6 @@ LABEL com.github.actions.description="Enable arbitrary actions with the Juno CLI
 LABEL com.github.actions.icon="package"
 LABEL com.github.actions.color="purple"
 
-# Install required tools
-RUN DEBIAN_FRONTEND=noninteractive apt update && apt install -y \
-    jq \
-    && rm -rf /var/lib/apt/lists/*
-
 # Install Pnpm and Juno's CLI
 COPY ./kit/setup/tools ./kit/setup/tools
 RUN ./kit/setup/tools

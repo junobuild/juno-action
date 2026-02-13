@@ -64,7 +64,6 @@ RUN DEBIAN_FRONTEND=noninteractive apt update && apt install -y \
     curl \
     git \
     ca-certificates \
-    jq \
     && rm -rf /var/lib/apt/lists/*
 
 
