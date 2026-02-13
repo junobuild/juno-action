@@ -35,9 +35,6 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
-      - name: Debug
-        run: docker run --rm -e JUNO_TOKEN="${{ secrets.JUNO_TOKEN }}" juno-action:test-${{ matrix.dockerfile == 'Dockerfile.full' && 'full' || 'slim' }} version --cli
-
       - name: Deploy with OIDC authentication
         run: |
           docker run --rm \
