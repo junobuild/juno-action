@@ -6,7 +6,7 @@ import {encodeToken} from './_token.ts';
 const maybeEnv = await loadEnv();
 
 switch (maybeEnv.result) {
-  case 'skip':
+  case 'missing-config':
     process.exit(42);
     break;
   case 'error':
