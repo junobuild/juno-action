@@ -15,7 +15,7 @@ CLEANUP_TOKEN=""
 
 cleanup() {
   if [ -n "$CLEANUP_TOKEN" ]; then
-    (cd /kit/token && npm run clean 2>&1) || true
+    (npm run clean --prefix ./kit/token 2>&1) || true
   fi
 }
 
@@ -28,7 +28,7 @@ echo "2"
 if [ -z "$JUNO_TOKEN" ]; then
   echo "3"
 
-  JUNO_TOKEN=$(cd /kit/token && npm run auth 2>&1)
+  JUNO_TOKEN=$(npm run auth --prefix ./kit/token 2>&1)
 
   echo "4"
 
