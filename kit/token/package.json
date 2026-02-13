@@ -39,7 +39,7 @@
     "@dfinity/utils": "^4.1.0",
     "@dfinity/zod-schemas": "^3.0.2",
     "@icp-sdk/core": "^5.0.0",
-    "@junobuild/admin": "^4.0.2-next-2026-02-12.1",
+    "@junobuild/admin": "^4.0.2-next-2026-02-13",
     "@junobuild/auth": "^3.0.3-next-2026-02-12",
     "@junobuild/cli-tools": "^0.10.1-next-2026-02-12",
     "@junobuild/config": "^2.10.1-next-2026-02-12",
