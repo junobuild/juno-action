@@ -1,14 +1,13 @@
-import type {PrincipalText} from '@dfinity/zod-schemas';
-import {Ed25519KeyIdentity} from '@icp-sdk/core/identity';
+import type {Ed25519KeyIdentity} from '@icp-sdk/core/identity';
 import {deleteSatelliteControllers} from '@junobuild/admin';
-import {Env} from './_env';
+import type {Env} from './_env';
 
 export const deleteController = async ({
   identity,
   env: {satelliteId, container}
 }: {
   identity: Ed25519KeyIdentity;
-  env: Pick<Env, "satelliteId" | "container">
+  env: Pick<Env, 'satelliteId' | 'container'>;
 }): Promise<{result: 'success'} | {result: 'error'; err: unknown}> => {
   try {
     await deleteSatelliteControllers({

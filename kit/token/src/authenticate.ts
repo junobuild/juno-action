@@ -1,8 +1,7 @@
-import {nonNullish} from '@dfinity/utils';
 import {authenticate} from './_authenticate';
 import {loadEnv} from './_env';
-import {encodeToken} from './_token';
 import {logError} from './_error';
+import {encodeToken} from './_token';
 
 const maybeEnv = await loadEnv();
 
