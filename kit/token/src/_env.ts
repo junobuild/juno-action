@@ -1,16 +1,17 @@
 import {isEmptyString} from '@dfinity/utils';
 import {nextArg} from '@junobuild/cli-tools';
 import type {JunoConfigEnv} from '@junobuild/config';
+import type {ActorParameters} from '@junobuild/ic-client/actor';
 import {readConfig} from './_config';
 import {assertAndReadSatelliteId} from './_satellite';
 
-export interface Env {
+export type Env = {
   oidcRequest: {
     url: string;
     token: string;
   };
   satelliteId: string;
-}
+} & Pick<ActorParameters, 'container'>;
 
 const loadJunoEnv = (): JunoConfigEnv => {
   const [_, ...args] = process.argv.slice(2);
@@ -66,7 +67,10 @@ export const loadEnv = async (): Promise<
       oidcRequest: {
         url: tokenRequestUrl,
         token: tokenRequestToken
-      }
+      },
+      // For simplicity reasons, we assume that currently no developers are actually using the emulator in GitHub Actions
+      // with another URL than the default and for another Juno mode than development.
+      ...(env.mode === 'development' && {container: true})
     }
   };
 };

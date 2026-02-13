@@ -1,13 +1,14 @@
 import type {PrincipalText} from '@dfinity/zod-schemas';
 import {Ed25519KeyIdentity} from '@icp-sdk/core/identity';
 import {deleteSatelliteControllers} from '@junobuild/admin';
+import {Env} from './_env';
 
 export const deleteController = async ({
   identity,
-  satelliteId
+  env: {satelliteId, container}
 }: {
   identity: Ed25519KeyIdentity;
-  satelliteId: PrincipalText;
+  env: Pick<Env, "satelliteId" | "container">
 }): Promise<{result: 'success'} | {result: 'error'; err: unknown}> => {
   try {
     await deleteSatelliteControllers({
@@ -16,7 +17,7 @@ export const deleteController = async ({
       },
       satellite: {
         identity,
-        container: false,
+        container,
         satelliteId
       }
     });
