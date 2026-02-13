@@ -1,9 +1,9 @@
 import {isEmptyString} from '@dfinity/utils';
 import {Ed25519KeyIdentity} from '@icp-sdk/core/identity';
-import {deleteController} from './_controller.ts';
-import {loadEnv} from './_env.ts';
-import {logError} from './_error.ts';
-import {decodeToken} from './_token.ts';
+import {deleteController} from './_controller';
+import {loadEnv} from './_env';
+import {logError} from './_error';
+import {decodeToken} from './_token';
 
 const maybeEnv = await loadEnv();
 

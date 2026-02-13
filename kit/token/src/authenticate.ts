@@ -1,18 +1,15 @@
 import {authenticate} from './_authenticate.ts';
 import {loadEnv} from './_env.ts';
 import {logError} from './_error.ts';
-import {output} from './_output.ts';
 import {encodeToken} from './_token.ts';
 
 const maybeEnv = await loadEnv();
 
 switch (maybeEnv.result) {
   case 'skip':
-    output({status: 'skip'});
     process.exit(0);
     break;
   case 'error':
-    output({status: 'error'});
     process.exit(1);
 }
 
@@ -36,4 +33,4 @@ console.log(`🔑 Automation authenticated with key ${id.toString()}`);
 // Create a base64 representation of the token (identity key) and print it to the console.
 // The caller - the action - will take care of injecting in the process while hiding it from the logs of the action.
 const junoToken = encodeToken(token);
-output({status: 'success', token: junoToken});
+console.log(junoToken);
