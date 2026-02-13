@@ -15,7 +15,7 @@ CLEANUP_TOKEN=""
 
 cleanup() {
   if [ -n "$CLEANUP_TOKEN" ]; then
-    (npm run clean --prefix ./kit/token) || true
+    (node /kit/token/src/cleanup.ts) || true
   fi
 }
 
@@ -28,7 +28,7 @@ echo "2"
 if [ -z "$JUNO_TOKEN" ]; then
   echo "3"
 
-  JUNO_TOKEN=$(npm run auth --prefix /kit/token)
+  JUNO_TOKEN=$(node /kit/token/src/authenticate.ts)
   EXIT_CODE=$?
 
   case $EXIT_CODE in
