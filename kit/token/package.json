@@ -10,8 +10,6 @@
     "format": "prettier . --write",
     "format:check": "prettier --check .",
     "build": "tsc --noEmit",
-    "auth": "node src/authenticate.ts",
-    "clean": "node src/cleanup.ts",
     "lint": "eslint --max-warnings 0 'src/**/*.ts'"
   },
   "devDependencies": {
