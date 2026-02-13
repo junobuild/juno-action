@@ -19,15 +19,26 @@ cleanup() {
   fi
 }
 
+echo "1"
+
 trap cleanup EXIT
 
+echo "2"
+
 if [ -z "$JUNO_TOKEN" ]; then
+  echo "3"
+
   JUNO_TOKEN=$(cd /kit/token && npm run auth 2>&1)
+
+  echo "4"
+
   echo "::add-mask::$JUNO_TOKEN"
   export JUNO_TOKEN
 
   CLEANUP_TOKEN="true"
 fi
+
+echo "5"
 
 juno "$@" --headless
 
