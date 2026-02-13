@@ -1,7 +1,7 @@
 import type {JsonnableEd25519KeyIdentity} from '@icp-sdk/core/identity';
 import type {Principal} from '@icp-sdk/core/principal';
 import {authenticateAutomation} from '@junobuild/auth/automation';
-import type {Env} from './_env';
+import type {Env} from './_env.ts';
 
 export const authenticate = async ({
   oidcRequest: {url: requestUrl, token: requestToken},
