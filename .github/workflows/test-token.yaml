@@ -22,29 +22,11 @@ jobs:
           node-version: 24
           registry-url: 'https://registry.npmjs.org'
 
-      - name: Install Juno CLI
-        run: npm i -g @junobuild/cli
-
-      - name: Run emulator
-        working-directory: ./e2e
-        run: |
-          set -e
-          juno emulator start --headless &
-          juno emulator wait
-
       - name: Deploy with OIDC authentication
         uses: ./
         with:
-          args: deploy --mode development
+          args: hosting deploy
           project_path: ./e2e
-
-      - name: Login local CLI
-        working-directory: ./e2e
-        run: juno login --emulator --mode development --headless
-
-      - name: Test
-        working-directory: ./e2e
-        run: npm run test
 
   may-merge:
     needs: ['test-token']
