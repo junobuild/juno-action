@@ -1,0 +1,16 @@
+{
+  "name": "@junobuild/juno-action-e2e",
+  "private": true,
+  "version": "0.0.1",
+  "license": "MIT",
+  "scripts": {
+    "format": "prettier . --write",
+    "format:check": "prettier --check .",
+    "test": "node specs/deploy.spec.mjs"
+  },
+  "devDependencies": {
+    "@junobuild/config": "^2.10.1",
+    "prettier": "^3.8.1",
+    "prettier-plugin-organize-imports": "^4.3.0"
+  }
+}
