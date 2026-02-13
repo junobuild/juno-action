@@ -16,4 +16,8 @@ export const logError = (err: unknown) => {
   if (nonNullish(message)) {
     console.error(message);
   }
+
+  if (err instanceof Error && err.cause) {
+    console.error('Cause:', err.cause);
+  }
 };
