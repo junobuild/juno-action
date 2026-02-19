@@ -26,7 +26,7 @@ export const loadEnv = async (): Promise<
       result: 'success';
       env: Env;
     }
-  | {result: 'skip'}
+  | {result: 'missing-config'}
   | {result: 'error'}
 > => {
   const env = loadJunoEnv();
@@ -35,7 +35,7 @@ export const loadEnv = async (): Promise<
 
   if ('err' in maybeConfig) {
     console.warn('ℹ️  No juno.config found. Skipping automation authentication.');
-    return {result: 'skip'};
+    return {result: 'missing-config'};
   }
 
   const {
@@ -59,7 +59,7 @@ export const loadEnv = async (): Promise<
     console.warn(
       '💡 Ensure "id-token: write" permission is set in your workflow if this is unexpected.'
     );
-    return {result: 'skip'};
+    return {result: 'missing-config'};
   }
 
   return {
