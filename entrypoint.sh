@@ -55,7 +55,7 @@ elif requires_token_only "$*"; then
   fi
 else
   if [ -z "$JUNO_TOKEN" ]; then
-    JUNO_TOKEN=$(node /kit/token/src/authenticate.ts)
+    JUNO_TOKEN=$(node /kit/token/src/authenticate.ts "$@")
     echo "::add-mask::$JUNO_TOKEN"
     export JUNO_TOKEN
 
