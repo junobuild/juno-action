@@ -18,26 +18,10 @@ trap cleanup EXIT
 
 if [ -z "$JUNO_TOKEN" ]; then
   JUNO_TOKEN=$(node /kit/token/src/authenticate.ts)
-  EXIT_CODE=$?
+  echo "::add-mask::$JUNO_TOKEN"
+  export JUNO_TOKEN
 
-  case $EXIT_CODE in
-    0)
-      echo "::add-mask::$JUNO_TOKEN"
-      export JUNO_TOKEN
-      CLEANUP_TOKEN="true"
-      ;;
-    1)
-      # An error happened
-      exit 1
-      ;;
-    42)
-      # Skip
-      ;;
-    *)
-      # Unexpected error
-      exit 1
-      ;;
-  esac
+  CLEANUP_TOKEN="true"
 fi
 
 juno "$@" --headless
