@@ -8,6 +8,16 @@ export default defineConfig({
       production: "<PROD_SATELLITE_ID>",
     },
     source: "fixtures",
+    automation: {
+      github: {
+        repositories: [
+          {
+            owner: "junobuild",
+            name: "juno-action",
+          },
+        ],
+      },
+    },
   },
   emulator: {
     runner: {

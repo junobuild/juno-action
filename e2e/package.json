@@ -9,7 +9,7 @@
     "test": "node specs/deploy.spec.mjs"
   },
   "devDependencies": {
-    "@junobuild/config": "^2.10.1",
+    "@junobuild/config": "^2.11.0",
     "prettier": "^3.8.1",
     "prettier-plugin-organize-imports": "^4.3.0"
   }
