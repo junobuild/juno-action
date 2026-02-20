@@ -58,7 +58,7 @@ jobs:
           set -e
           juno emulator start --headless &
           juno emulator wait
-          juno login --emulator --mode development --headless
+          npm run emulator:config
 
       - name: Init Satellite
         working-directory: ./e2e

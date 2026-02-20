@@ -3,9 +3,11 @@
   "private": true,
   "version": "0.0.1",
   "license": "MIT",
+  "type": "module",
   "scripts": {
     "format": "prettier . --write",
     "format:check": "prettier --check .",
+    "emulator:config": "node scripts/emulator.ts",
     "e2e": "NODE_ENV=development playwright test",
     "e2e:ci": "playwright test --reporter=html",
     "e2e:report": "playwright show-report",
