@@ -1,0 +1,87 @@
+name: Test Token Authentication
+
+on:
+  workflow_dispatch:
+  pull_request:
+
+jobs:
+  test-token:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        dockerfile: [ Dockerfile.slim ]
+    permissions:
+      id-token: write
+      contents: read
+
+    steps:
+      # Action: https://github.com/actions/checkout/releases/tag/v4.2.2
+      - name: Check out the repo
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+
+      # Action: https://github.com/docker/setup-buildx-action/releases/tag/v3.10.0
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@b5ca514318bd6ebac0fb2aedd5d36ec1b5c232a2
+
+      # Action: https://github.com/docker/build-push-action/releases/tag/v6.18.0
+      - name: Build and push
+        uses: docker/build-push-action@263435318d21b8e681c14492fe198d362a7d2c83
+        with:
+          context: .
+          file: ${{ matrix.dockerfile }}
+          load: true
+          tags: juno-action:test-${{ matrix.dockerfile == 'Dockerfile.full' && 'full' || 'slim' }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      # Action: https://github.com/actions/setup-node/releases/tag/v4.3.0
+      - name: Setup node
+        uses: actions/setup-node@cdca7365b2dadb8aad0a33bc7601856ffabcc48e
+        with:
+          node-version: 24
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Install dependencies
+        working-directory: ./e2e
+        run: npm ci
+
+      - name: Prepare Playwright
+        working-directory: ./e2e
+        run: npm run e2e:playwright:install
+
+      - name: Install Juno CLI
+        run: npm i -g @junobuild/cli
+
+      - name: Run emulator
+        working-directory: ./e2e
+        run: |
+          set -e
+          juno emulator start --headless &
+          juno emulator wait
+          npm run emulator:config
+
+      - name: Init Satellite
+        working-directory: ./e2e
+        run: npm run e2e:ci e2e/init.spec.ts
+
+      - name: Deploy with OIDC authentication
+        run: |
+          docker run --rm \
+            --network host \
+            -v ${{ github.workspace }}/e2e:/workspace \
+            -w /workspace \
+            -e ACTIONS_ID_TOKEN_REQUEST_URL \
+            -e ACTIONS_ID_TOKEN_REQUEST_TOKEN \
+            juno-action:test-${{ matrix.dockerfile == 'Dockerfile.full' && 'full' || 'slim' }} \
+            hosting deploy --mode development
+
+      - name: Test
+        working-directory: ./e2e
+        run: npm run e2e:ci e2e/actions.spec.ts
+
+  may-merge:
+    needs: ['test-token']
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cleared for merging
+        run: echo OK

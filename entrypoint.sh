@@ -7,10 +7,11 @@ if [ -n "$PROJECT_PATH" ]; then
 fi
 
 CLEANUP_TOKEN=""
+SCRIPT_ARGS=("$@")
 
 cleanup() {
   if [ -n "$CLEANUP_TOKEN" ]; then
-    (node /kit/token/src/cleanup.ts) || true
+    (node /kit/token/src/cleanup.ts "${SCRIPT_ARGS[@]}") || true
   fi
 }
 
@@ -55,7 +56,7 @@ elif requires_token_only "$*"; then
   fi
 else
   if [ -z "$JUNO_TOKEN" ]; then
-    JUNO_TOKEN=$(node /kit/token/src/authenticate.ts)
+    JUNO_TOKEN=$(node /kit/token/src/authenticate.ts "$@")
     echo "::add-mask::$JUNO_TOKEN"
     export JUNO_TOKEN
 
