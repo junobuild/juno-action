@@ -6,6 +6,11 @@ test.describe.configure({mode: 'serial'});
 test.describe('Deploy', () => {
   const getTestPages = initSatelliteTestSuite();
 
+  test.afterAll(async () => {
+    const {cliPage} = getTestPages();
+    await cliPage.revertConfig();
+  });
+
   test('should have deployed', async ({page}) => {
     const {satelliteId} = getTestPages();
 

@@ -29,9 +29,5 @@ export const initSatelliteTestSuite = (): (() => SatelliteTestPages) => {
     cliPage = await CliPage.initWithoutLogin({satelliteId});
   });
 
-  test.afterAll(async () => {
-    await cliPage.revertConfig();
-  });
-
   return (): SatelliteTestPages => ({satelliteId, cliPage});
 };
