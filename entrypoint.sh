@@ -7,10 +7,11 @@ if [ -n "$PROJECT_PATH" ]; then
 fi
 
 CLEANUP_TOKEN=""
+SCRIPT_ARGS=("$@")
 
 cleanup() {
   if [ -n "$CLEANUP_TOKEN" ]; then
-    (node /kit/token/src/cleanup.ts) || true
+    (node /kit/token/src/cleanup.ts "${SCRIPT_ARGS[@]}") || true
   fi
 }
 
