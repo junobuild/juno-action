@@ -32,6 +32,10 @@ export class CliPage extends TestPage {
     this.#satelliteId = satelliteId;
   }
 
+  static async initWithoutLogin(params: CliPageParams): Promise<CliPage> {
+    return new CliPage(params);
+  }
+
   static async initWithEmulatorLogin(params: CliPageParams): Promise<CliPage> {
     const cliPage = new CliPage(params);
 
@@ -50,7 +54,8 @@ export class CliPage extends TestPage {
     await writeFile(JUNO_CONFIG, content, 'utf-8');
   }
 
-  private async revertConfig(): Promise<void> {
+  // TODO: public different than in CLI
+  async revertConfig(): Promise<void> {
     let content = await readFile(JUNO_CONFIG, 'utf-8');
     content = content.replace(this.#satelliteId, '<DEV_SATELLITE_ID>');
     await writeFile(JUNO_CONFIG, content, 'utf-8');
