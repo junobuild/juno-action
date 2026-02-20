@@ -10,7 +10,7 @@ CLEANUP_TOKEN=""
 
 cleanup() {
   if [ -n "$CLEANUP_TOKEN" ]; then
-    (node /kit/token/src/cleanup.ts) || true
+    (node /kit/token/src/cleanup.ts "$@") || true
   fi
 }
 
