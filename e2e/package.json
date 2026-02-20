@@ -21,8 +21,6 @@
     "prettier-plugin-organize-imports": "^4.3.0"
   },
   "dependencies": {
-    "@dfinity/utils": "^4.1.0",
-    "@junobuild/cli-tools": "^0.10.2",
-    "@junobuild/config-loader": "^0.4.8"
+    "@junobuild/emulator-playwright": "^0.0.3"
   }
 }

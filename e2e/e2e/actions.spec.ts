@@ -1,14 +1,14 @@
+import {initSatelliteSuite} from '@junobuild/emulator-playwright';
 import {expect, test} from '@playwright/test';
-import {initSatelliteTestSuite} from './utils/init.satellite.utils';
 
 test.describe.configure({mode: 'serial'});
 
 test.describe('Deploy', () => {
-  const getTestPages = initSatelliteTestSuite();
+  const getTestPages = initSatelliteSuite();
 
   test.afterAll(async () => {
     const {cliPage} = getTestPages();
-    await cliPage.revertConfig();
+    await cliPage.cleanUp();
   });
 
   test('should have deployed', async ({page}) => {
