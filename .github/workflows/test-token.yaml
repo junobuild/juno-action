@@ -44,6 +44,10 @@ jobs:
       - name: Install Juno CLI
         run: npm i -g @junobuild/cli
 
+      - name: Prepare Playwright
+        working-directory: ./e2e
+        run: npm run e2e:playwright:install
+
       - name: Run emulator
         working-directory: ./e2e
         run: |
