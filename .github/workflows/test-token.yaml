@@ -41,12 +41,16 @@ jobs:
           node-version: 24
           registry-url: 'https://registry.npmjs.org'
 
-      - name: Install Juno CLI
-        run: npm i -g @junobuild/cli
+      - name: Install dependencies
+        working-directory: ./e2e
+        run: npm ci
 
       - name: Prepare Playwright
         working-directory: ./e2e
         run: npm run e2e:playwright:install
+
+      - name: Install Juno CLI
+        run: npm i -g @junobuild/cli
 
       - name: Run emulator
         working-directory: ./e2e
