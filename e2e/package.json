@@ -1,0 +1,28 @@
+{
+  "name": "@junobuild/juno-action-e2e",
+  "private": true,
+  "version": "0.0.1",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "format": "prettier . --write",
+    "format:check": "prettier --check .",
+    "emulator:config": "node scripts/emulator.ts",
+    "e2e": "NODE_ENV=development playwright test",
+    "e2e:ci": "playwright test --reporter=html",
+    "e2e:report": "playwright show-report",
+    "e2e:playwright:install": "playwright install chromium --with-deps"
+  },
+  "devDependencies": {
+    "@junobuild/config": "^2.11.0",
+    "@playwright/test": "^1.58.2",
+    "@types/node": "^25.3.0",
+    "prettier": "^3.8.1",
+    "prettier-plugin-organize-imports": "^4.3.0"
+  },
+  "dependencies": {
+    "@dfinity/utils": "^4.1.0",
+    "@junobuild/cli-tools": "^0.10.2",
+    "@junobuild/config-loader": "^0.4.8"
+  }
+}
