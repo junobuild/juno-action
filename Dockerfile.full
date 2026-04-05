@@ -8,6 +8,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt update && apt install -y \
     bash \
     curl \
     build-essential \
+    jq \
     && rm -rf /var/lib/apt/lists/*
 
 # Create a working user
@@ -43,6 +44,24 @@ COPY --chown=apprunner:apprunner ./kit/setup/bootstrap ./kit/setup/bootstrap
 
 # Install core tools required for building WASM (same as in the main Juno repository)
 RUN ./kit/setup/bootstrap
+
+# Pre-build all cargo dependencies for Sputnik build
+RUN cd /juno/target/juno-main \
+    && mkdir -p src/satellite/src && touch src/satellite/src/lib.rs \
+    && mkdir -p src/sputnik/src && touch src/sputnik/src/lib.rs \
+    && mkdir -p src/libs/macros/src && touch src/libs/macros/src/lib.rs \
+    && mkdir -p src/libs/satellite/src && touch src/libs/satellite/src/lib.rs \
+    && mkdir -p src/libs/shared/src && touch src/libs/shared/src/lib.rs \
+    && mkdir -p src/libs/utils/src && touch src/libs/utils/src/lib.rs \
+    && mkdir -p src/libs/collections/src && touch src/libs/collections/src/lib.rs \
+    && mkdir -p src/libs/storage/src && touch src/libs/storage/src/lib.rs \
+    && mkdir -p src/libs/cdn/src && touch src/libs/cdn/src/lib.rs \
+    && mkdir -p src/libs/auth/src && touch src/libs/auth/src/lib.rs \
+    && ./docker/build-deps
+
+# Pre-build latest junobuild-* cargo dependencies for Satellites functions build
+COPY --chown=apprunner:apprunner ./kit/deps /home/apprunner/deps
+RUN cd /home/apprunner/deps && cargo build --target wasm32-unknown-unknown --release
 
 # --- Runtime Stage ---
 FROM node:24-slim@sha256:76d0ed0ed93bed4f4376211e9d8fddac4d8b3fbdb54cc45955696001a3c91152
@@ -99,6 +118,12 @@ COPY --from=builder --chown=apprunner:apprunner /juno/target/juno-main/src /juno
 COPY --from=builder --chown=apprunner:apprunner /juno/target/juno-main/Cargo.lock /juno/Cargo.lock
 COPY --from=builder --chown=apprunner:apprunner /juno/target/juno-main/Cargo.toml /juno/Cargo.toml
 COPY --from=builder --chown=apprunner:apprunner /juno/target/juno-main/rust-toolchain.toml /juno/rust-toolchain.toml
+
+# Copy pre-built Cargo dependencies to avoid recompiling them on each CI run
+# Particularly useful for Sputnik since its version is always the one bundled
+# in the image
+COPY --from=builder --chown=apprunner:apprunner /juno/target/juno-main/target /juno/target
+COPY --from=builder --chown=apprunner:apprunner /home/apprunner/.cargo/registry /home/apprunner/.cargo/registry
 
 # Resolves cargo build error:
 # network failure seems to have happened

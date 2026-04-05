@@ -1,0 +1,18 @@
+# Dummy crate to pre-build the latest published junobuild-* dependencies into the
+# Cargo target cache, so developers don't have to compile them from scratch on each CI run.
+[package]
+name = "deps"
+version = "0.0.1"
+edition = "2021"
+
+[lib]
+
+[dependencies]
+junobuild-satellite = { version = "*", default-features = false }
+junobuild-macros = "*"
+junobuild-utils = "*"
+junobuild-shared = "*"
+junobuild-collections = "*"
+junobuild-storage = "*"
+junobuild-cdn = "*"
+junobuild-auth = "*"
