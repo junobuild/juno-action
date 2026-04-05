@@ -8,11 +8,15 @@ edition = "2021"
 [lib]
 
 [dependencies]
-junobuild-satellite = { version = "*", default-features = false }
-junobuild-macros = "*"
-junobuild-utils = "*"
-junobuild-shared = "*"
-junobuild-collections = "*"
-junobuild-storage = "*"
-junobuild-cdn = "*"
-junobuild-auth = "*"
+candid = "0.10.20"
+ic-cdk = "0.19.0"
+ic-cdk-macros = "0.19.0"
+serde = "1.0.225"
+junobuild-satellite = { version = "0.6.0", default-features = false }
+junobuild-macros = "0.4.0"
+junobuild-utils = "0.4.0"
+junobuild-shared = "0.8.0"
+junobuild-collections = "0.5.0"
+junobuild-storage = "0.7.0"
+junobuild-cdn = "0.7.0"
+junobuild-auth = "0.4.0"
