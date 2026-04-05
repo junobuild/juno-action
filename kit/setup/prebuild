@@ -3,21 +3,19 @@
 set -euo pipefail
 
 # Pre-build all cargo dependencies for Sputnik build
-mkdir -p "$JUNO_MAIN_DIR/src/satellite/src" && touch "$JUNO_MAIN_DIR/src/satellite/src/lib.rs"
-mkdir -p "$JUNO_MAIN_DIR/src/sputnik/src" && touch "$JUNO_MAIN_DIR/src/sputnik/src/lib.rs"
-mkdir -p "$JUNO_MAIN_DIR/src/libs/macros/src" && touch "$JUNO_MAIN_DIR/src/libs/macros/src/lib.rs"
-mkdir -p "$JUNO_MAIN_DIR/src/libs/satellite/src" && touch "$JUNO_MAIN_DIR/src/libs/satellite/src/lib.rs"
-mkdir -p "$JUNO_MAIN_DIR/src/libs/shared/src" && touch "$JUNO_MAIN_DIR/src/libs/shared/src/lib.rs"
-mkdir -p "$JUNO_MAIN_DIR/src/libs/utils/src" && touch "$JUNO_MAIN_DIR/src/libs/utils/src/lib.rs"
-mkdir -p "$JUNO_MAIN_DIR/src/libs/collections/src" && touch "$JUNO_MAIN_DIR/src/libs/collections/src/lib.rs"
-mkdir -p "$JUNO_MAIN_DIR/src/libs/storage/src" && touch "$JUNO_MAIN_DIR/src/libs/storage/src/lib.rs"
-mkdir -p "$JUNO_MAIN_DIR/src/libs/cdn/src" && touch "$JUNO_MAIN_DIR/src/libs/cdn/src/lib.rs"
-mkdir -p "$JUNO_MAIN_DIR/src/libs/auth/src" && touch "$JUNO_MAIN_DIR/src/libs/auth/src/lib.rs"
-"$JUNO_MAIN_DIR/docker/build-deps"
+cd "$JUNO_MAIN_DIR" \
+    && mkdir -p src/satellite/src && touch src/satellite/src/lib.rs \
+    && mkdir -p src/sputnik/src && touch src/sputnik/src/lib.rs \
+    && mkdir -p src/libs/macros/src && touch src/libs/macros/src/lib.rs \
+    && mkdir -p src/libs/satellite/src && touch src/libs/satellite/src/lib.rs \
+    && mkdir -p src/libs/shared/src && touch src/libs/shared/src/lib.rs \
+    && mkdir -p src/libs/utils/src && touch src/libs/utils/src/lib.rs \
+    && mkdir -p src/libs/collections/src && touch src/libs/collections/src/lib.rs \
+    && mkdir -p src/libs/storage/src && touch src/libs/storage/src/lib.rs \
+    && mkdir -p src/libs/cdn/src && touch src/libs/cdn/src/lib.rs \
+    && mkdir -p src/libs/auth/src && touch src/libs/auth/src/lib.rs \
+    && ./docker/build-deps
 
-# Pre-build latest junobuild-* cargo dependencies for Satellites functions build
-RUSTFLAGS='--cfg getrandom_backend="custom"' cargo build \
-    --manifest-path /home/apprunner/deps/Cargo.toml \
-    --target wasm32-unknown-unknown \
-    --target-dir "$JUNO_MAIN_DIR/target" \
-    --release
+# Pre-build latest published junobuild-* dependencies for satellite builds
+cd /home/apprunner/deps
+RUSTFLAGS='--cfg getrandom_backend="custom"' cargo build --target wasm32-unknown-unknown --target-dir "$JUNO_MAIN_DIR/target" --release
