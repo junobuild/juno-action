@@ -3,3 +3,7 @@
 set -euo pipefail
 
 ./docker/download/juno-source
+
+# Remove [patch.crates-io] section so developer satellite builds resolve
+# their declared junobuild-* versions from crates.io instead of the bundled workspace
+sed -i '/^\[patch\.crates-io\]/,/^$/d' "$JUNO_MAIN_DIR/Cargo.toml"
