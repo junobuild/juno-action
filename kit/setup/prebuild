@@ -14,7 +14,8 @@ cd "$JUNO_MAIN_DIR" \
     && mkdir -p src/libs/storage/src && touch src/libs/storage/src/lib.rs \
     && mkdir -p src/libs/cdn/src && touch src/libs/cdn/src/lib.rs \
     && mkdir -p src/libs/auth/src && touch src/libs/auth/src/lib.rs \
-    && ./docker/build-deps
+    && ./docker/build --only-dependencies --satellite \
+    && ./docker/build --only-dependencies --sputnik
 
 # Pre-build latest published junobuild-* dependencies for satellite builds
 cd /home/apprunner/deps
