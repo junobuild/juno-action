@@ -1,3 +1,3 @@
-use junobuild_macros::include_satellite;
+use junobuild_satellite::include_satellite;
 
 include_satellite!();
