@@ -20,5 +20,8 @@ cd "$JUNO_MAIN_DIR" \
 # Note: even though we compile them here, the artifacts won't be reused at runtime because
 # Cargo fingerprints are tied to the workspace - the developer's project is a different
 # workspace, so everything will recompile. Only the download step is saved.
+# TODO: with a third party tool like sscache we might be able to cache the artifacts
+# https://web.mit.edu/rust-lang_v1.25/arch/amd64_ubuntu1404/share/doc/rust/html/cargo/guide/build-cache.html
+# https://github.com/mozilla/sccache
 cd /home/apprunner/deps
 RUSTFLAGS='--cfg getrandom_backend="custom"' cargo build --target wasm32-unknown-unknown --target-dir "$JUNO_MAIN_DIR/target" --release
