@@ -8,6 +8,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt update && apt install -y \
     bash \
     curl \
     build-essential \
+    jq \
     && rm -rf /var/lib/apt/lists/*
 
 # Create a working user
@@ -43,6 +44,11 @@ COPY --chown=apprunner:apprunner ./kit/setup/bootstrap ./kit/setup/bootstrap
 
 # Install core tools required for building WASM (same as in the main Juno repository)
 RUN ./kit/setup/bootstrap
+
+# Pre-build Cargo dependencies to speed up serverless function compilation when used in the actions
+COPY --chown=apprunner:apprunner ./kit/deps /home/apprunner/deps
+COPY --chown=apprunner:apprunner ./kit/setup/prebuild ./kit/setup/prebuild
+RUN ./kit/setup/prebuild
 
 # --- Runtime Stage ---
 FROM node:24-slim@sha256:76d0ed0ed93bed4f4376211e9d8fddac4d8b3fbdb54cc45955696001a3c91152
@@ -99,6 +105,12 @@ COPY --from=builder --chown=apprunner:apprunner /juno/target/juno-main/src /juno
 COPY --from=builder --chown=apprunner:apprunner /juno/target/juno-main/Cargo.lock /juno/Cargo.lock
 COPY --from=builder --chown=apprunner:apprunner /juno/target/juno-main/Cargo.toml /juno/Cargo.toml
 COPY --from=builder --chown=apprunner:apprunner /juno/target/juno-main/rust-toolchain.toml /juno/rust-toolchain.toml
+
+# Copy pre-built Cargo dependencies to avoid recompiling them on each CI run
+# Particularly useful for Sputnik since its version is always the one bundled
+# in the image
+COPY --from=builder --chown=apprunner:apprunner /juno/target /juno/target
+COPY --from=builder --chown=apprunner:apprunner /home/apprunner/.cargo/registry /home/apprunner/.cargo/registry
 
 # Resolves cargo build error:
 # network failure seems to have happened

@@ -2,4 +2,4 @@
 
 set -e
 
-npm i -g @icp-sdk/bindgen@0.2.0
+npm i -g @icp-sdk/bindgen@0.3.0
