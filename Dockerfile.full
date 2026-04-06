@@ -109,7 +109,7 @@ COPY --from=builder --chown=apprunner:apprunner /juno/target/juno-main/rust-tool
 # Copy pre-built Cargo dependencies to avoid recompiling them on each CI run
 # Particularly useful for Sputnik since its version is always the one bundled
 # in the image
-COPY --from=builder --chown=apprunner:apprunner /juno/target/juno-main/target /juno/target
+COPY --from=builder --chown=apprunner:apprunner /juno/target /juno/target
 COPY --from=builder --chown=apprunner:apprunner /home/apprunner/.cargo/registry /home/apprunner/.cargo/registry
 
 # Resolves cargo build error:
