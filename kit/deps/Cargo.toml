@@ -1,5 +1,5 @@
-# Dummy crate to pre-build the latest published junobuild-* dependencies into the
-# Cargo target cache, so developers don't have to compile them from scratch on each CI run.
+# Dummy crate to pre-download and build the latest published junobuild-* dependencies into the
+# Cargo target cache, so developers don't have to download them on each CI run.
 [package]
 name = "deps"
 version = "0.0.1"
