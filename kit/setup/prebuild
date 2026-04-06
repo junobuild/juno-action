@@ -14,9 +14,11 @@ cd "$JUNO_MAIN_DIR" \
     && mkdir -p src/libs/storage/src && touch src/libs/storage/src/lib.rs \
     && mkdir -p src/libs/cdn/src && touch src/libs/cdn/src/lib.rs \
     && mkdir -p src/libs/auth/src && touch src/libs/auth/src/lib.rs \
-    && ./docker/build --only-dependencies --satellite \
     && ./docker/build --only-dependencies --sputnik
 
-# Pre-build latest published junobuild-* dependencies for satellite builds
+# Pre-download latest published junobuild-* dependencies into the Cargo registry cache.
+# Note: even though we compile them here, the artifacts won't be reused at runtime because
+# Cargo fingerprints are tied to the workspace - the developer's project is a different
+# workspace, so everything will recompile. Only the download step is saved.
 cd /home/apprunner/deps
 RUSTFLAGS='--cfg getrandom_backend="custom"' cargo build --target wasm32-unknown-unknown --target-dir "$JUNO_MAIN_DIR/target" --release
