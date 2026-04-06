@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+JUNO_TARGET_DIR=/juno/target
+
+# Pre-build all cargo dependencies for Sputnik build
+cd "$JUNO_MAIN_DIR" \
+    && mkdir -p src/satellite/src && touch src/satellite/src/lib.rs \
+    && mkdir -p src/sputnik/src && touch src/sputnik/src/lib.rs \
+    && mkdir -p src/libs/macros/src && touch src/libs/macros/src/lib.rs \
+    && mkdir -p src/libs/satellite/src && touch src/libs/satellite/src/lib.rs \
+    && mkdir -p src/libs/shared/src && touch src/libs/shared/src/lib.rs \
+    && mkdir -p src/libs/utils/src && touch src/libs/utils/src/lib.rs \
+    && mkdir -p src/libs/collections/src && touch src/libs/collections/src/lib.rs \
+    && mkdir -p src/libs/storage/src && touch src/libs/storage/src/lib.rs \
+    && mkdir -p src/libs/cdn/src && touch src/libs/cdn/src/lib.rs \
+    && mkdir -p src/libs/auth/src && touch src/libs/auth/src/lib.rs \
+    && CARGO_TARGET_DIR="$JUNO_TARGET_DIR" ./docker/build --only-dependencies --sputnik
+
+# Pre-download latest published junobuild-* dependencies into the Cargo registry cache.
+# Note: even though we compile them here, the artifacts won't be reused at runtime because
+# Cargo fingerprints are tied to the workspace - the developer's project is a different
+# workspace, so everything will recompile. Only the download step is saved.
+# TODO: with a third party tool like sscache we might be able to cache the artifacts
+# https://web.mit.edu/rust-lang_v1.25/arch/amd64_ubuntu1404/share/doc/rust/html/cargo/guide/build-cache.html
+# https://github.com/mozilla/sccache
+cd /home/apprunner/deps
+RUSTFLAGS='--cfg getrandom_backend="custom" -A deprecated' cargo build --target wasm32-unknown-unknown --target-dir "$JUNO_TARGET_DIR" --release
